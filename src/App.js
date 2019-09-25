@@ -7,10 +7,7 @@ import moment from 'moment'
 const localizer = momentLocalizer(moment) 
 function App() {
   return (
-    <Calendar
-      startAccessor="start"
-      endAccessor="end"
-    />
+    <p>Kitchen App</p>
   );
 }
 
