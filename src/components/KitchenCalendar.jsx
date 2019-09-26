@@ -11,10 +11,11 @@ const localizer = momentLocalizer(moment)
 class KitchenCalendar extends React.Component {
     constructor(props){
         super(props)
-        this.state = { events, isOpen : false }
+        this.state = { events, isOpen : false, modalTxt: ["world wide", "ygy"]}
     }
 
-    toggleModal = () => {
+    toggleModal = (start) => {
+        
         this.setState({
           isOpen: !this.state.isOpen
         });
@@ -22,8 +23,13 @@ class KitchenCalendar extends React.Component {
 
     
     handleSelect = ({ start, end }) => {
-        this.toggleModal ()
-/*
+        this.setState({
+            modalTxt: "Insert e-mails for team of the day" ,
+            modalDate: start
+        });
+        this.toggleModal(start)
+        /*
+        end = start
         const title = window.prompt('Correo')
         console.log(start)
         if (title)
@@ -44,7 +50,7 @@ class KitchenCalendar extends React.Component {
         return (
             <>
                 <Modal show={this.state.isOpen} onClose={this.toggleModal}>
-                    Here's some content for the modal
+                    {this.state.modalTxt[1]}
                 </Modal>
                 <Calendar
                     selectable
