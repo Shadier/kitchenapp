@@ -1,11 +1,12 @@
 import React from 'react'
+import '../App.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment, { months } from 'moment'
-import Modal  from './Modal';
+import Modal  from './Modal'
+
 
 const events = []
-const eventsToSend = []
 const localizer = momentLocalizer(moment) 
 
 class KitchenCalendar extends React.Component {
@@ -18,7 +19,8 @@ class KitchenCalendar extends React.Component {
             onCancel : false,
             isOpen : false,
             usrMorning : '',
-            usrAfternoon : ''
+            usrAfternoon : '',
+            eventsToSend : []
         }
     }
     
@@ -52,7 +54,22 @@ class KitchenCalendar extends React.Component {
                     title: usrAfternoon234,
                 },
                 ],
+                
+                eventsToSend: [
+                    ...this.state.eventsToSend,
+                    {
+                        start: date,
+                        end: date,
+                        title: usrMorning234,
+                    },
+                    {
+                        start: date,
+                        end: date,
+                        title: usrAfternoon234,
+                    },
+                    ],
             })
+            this.props.parentCallback(this.state.eventsToSend);
             console.log(this.state.events)
         }
     }
