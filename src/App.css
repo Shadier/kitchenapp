@@ -1,3 +1,14 @@
+*{
+  --primaryColor: #0087ff;
+  --secondaryColor: #0975d4;
+  --highlightColor: #EA6A68;
+  --gray: #EDEDED;
+  --darkGray: #999;
+  --boxShadow: 0px 2px 8px 0px rgba(0,0,0,0.3);
+  font-family: 'Ubuntu';
+  text-align: right;
+}
+
 .App {
   text-align: center;
 }
