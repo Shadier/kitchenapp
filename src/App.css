@@ -78,10 +78,13 @@ body{
   padding: 20px;
   margin-left: calc(50% - 200px);
   top: calc(50% - 200px);
+  
+  -webkit-box-shadow: var(--boxShadow);
+  -moz-box-shadow: var(--boxShadow);
+  box-shadow: var(--boxShadow);
 }
-.modal p{
-  margin-bottom: 30px;
-  display: block;
+.modal .title{
+  margin-bottom: 7px;
   text-align: center;
   display: block;
   font-weight: bold;
@@ -104,6 +107,12 @@ body{
   margin-bottom: 0px;
   text-align: left;
   margin-top: 20px;
+}
+.modal .subtitle{
+  color: var(--darkGray);
+  margin-bottom: 30px;
+  text-align: center;
+  display: block;
 }
 .kd-button-modal{
   cursor: pointer;
