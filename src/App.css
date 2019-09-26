@@ -129,7 +129,9 @@ body{
   font-weight: normal;
   color: var(--darkGray);
 }
-
+.rbc-event-content{
+  text-align: center;
+}
 
 .rbc-header{
   background-color: var(--primaryColor);
@@ -220,13 +222,14 @@ input[type="password"],
 input[type="text"],
 input[type="number"],
 select,
-textarea
+textarea,
+.input
 {
-    border-radius: 5px;
+    border-radius: 5px !important;
     border: 2px solid var(--gray);
-    outline: none;
-    padding: 10px;
-    box-sizing: border-box;
+    outline: none !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
 }
 
 input[type="text"]:focus,
@@ -234,7 +237,8 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="number"]:focus,
 select:focus,
-textarea:focus{
+textarea:focus,
+.input:focus{
     border: 2px solid var(--primaryColor);
     -webkit-box-shadow: var(--boxShadow);
     -moz-box-shadow: var(--boxShadow);

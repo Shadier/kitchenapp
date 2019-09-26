@@ -4,53 +4,87 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment, { months } from 'moment'
 import Modal  from './Modal';
 
-
 const events = []
+const eventsToSend = []
 const localizer = momentLocalizer(moment) 
 
 class KitchenCalendar extends React.Component {
     constructor(props){
         super(props)
-        this.state = { events, isOpen : false}
+        this.state = { 
+            date: '',
+            events, 
+            onClose : false,
+            onCancel : false,
+            isOpen : false,
+            usrMorning : '',
+            usrAfternoon : ''
+        }
     }
-
-    toggleModal = (start) => {
-        
+    
+    closeModal = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+    toggleModal = () => {
+        const date = this.state.date
+        const bandera = !this.state.isOpen
         this.setState({
           isOpen: !this.state.isOpen
         });
+        if(!bandera){
+            console.log("entro")
+            const usrMorning234 =  this.state.usrMorning + "@sciodev.com"
+            const usrAfternoon234 =  this.state.usrAfternoon + "@sciodev.com"
+            console.log(this.state.usrAfternoon)
+            this.setState({
+                events: [
+                ...this.state.events,
+                {
+                    start: date,
+                    end: date,
+                    title: usrMorning234,
+                },
+                {
+                    start: date,
+                    end: date,
+                    title: usrAfternoon234,
+                },
+                ],
+            })
+            console.log(this.state.events)
+        }
     }
 
+    onMorningChange = (event) =>{
+        this.setState({usrMorning: event.target.value})
+    }
+    onAfternoonChange = (event) =>{
+        this.setState({usrAfternoon: event.target.value})
+    }
+    
     
     handleSelect = ({ start, end }) => {
+        console.log(start)
+        const timeOffset = new Date().getTimezoneOffset() / 60
+        const newD = new Date(start.setHours(1 - timeOffset)).toISOString()
+        console.log(timeOffset)
+
+
+        
         var elementOfDay = String(start).split(" ");
         this.setState({
             modalTxt: "Insert e-mails of team for the day" ,
-            modalDate: elementOfDay[1] +' '+ elementOfDay[2] +' '+ elementOfDay[3]
+            modalDate: elementOfDay[1] +' '+ elementOfDay[2] +' '+ elementOfDay[3],
+            date: start
         });
-        this.toggleModal(start)
-        /*
-        end = start
-        const title = window.prompt('Correo')
-        console.log(start)
-        if (title)
-        this.setState({
-            events: [
-            ...this.state.events,
-            {
-                start,
-                end,
-                title,
-            },
-            ],
-        })
-        
-        console.log(this.state.events)*/
+        this.toggleModal()
     }
     render(){
         return (
             <>
-                <Modal morningEmail={this.props.morningEmail} afternoonEmail={this.props.afternoonEmail} title={this.state.modalTxt} subtitle={this.state.modalDate} show={this.state.isOpen} onClose={this.toggleModal}>
+                <Modal onAfternoonChange={this.onAfternoonChange} onMorningChange={this.onMorningChange} title={this.state.modalTxt} subtitle={this.state.modalDate} show={this.state.isOpen} onClose={this.toggleModal} onCancel={this.closeModal}>
                 </Modal>
                 <Calendar
                     selectable

@@ -8,7 +8,9 @@
     "react": "^16.9.0",
     "react-big-calendar": "^0.22.1",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.2"
+    "react-inputs-validation": "^4.0.2",
+    "react-scripts": "3.1.2",
+    "react-validation": "^3.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
