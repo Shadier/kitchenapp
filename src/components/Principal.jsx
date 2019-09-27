@@ -22,9 +22,11 @@ class Principal extends React.Component{
     return (
       <div>
         <Header/>
-        <button id="btnSendEvents" className="kd-button" eventsToSend={this.state.eventsToSend} onClick={this.print}><img src={mailIcon} alt="Mail icon"/><p>SEND ALL EVENTS</p></button>
-        <div className="principal-container">
-          <KitchenCalendar parentCallback={this.callbackFunction}/>
+        <div className="body-canvas">
+          <button id="btnSendEvents" className="kd-button" eventsToSend={this.state.eventsToSend} onClick={this.print}><img src={mailIcon} alt="Mail icon"/><p>SEND ALL EVENTS</p></button>
+          <div className="principal-container">
+            <KitchenCalendar parentCallback={this.callbackFunction}/>
+          </div>
         </div>
       </div>
     );

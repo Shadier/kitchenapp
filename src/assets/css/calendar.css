@@ -1,11 +1,13 @@
 body{
     text-align: center
   }
-  
+.body-canvas{
+  padding-bottom: 10%;
+}
   .principal-container{
     position: absolute;
     box-sizing: border-box;
-    min-height:65%;
+    min-height: 500px;
     height:65%;
     max-height:65%;
     min-width: 80%;
@@ -190,7 +192,8 @@ body{
   input[type="number"],
   select,
   textarea,
-  .input
+  .input,
+  .react-inputs-validation__textbox__input___20hDL
   {
       border-radius: 5px !important;
       border: 2px solid var(--gray);
