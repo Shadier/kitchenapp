@@ -38,7 +38,7 @@ class KitchenCalendar extends React.Component {
         const bandera = !this.state.isOpen
         if(!bandera){
             if(this.state.usrMorning.replace(/ /g, "") == '' || this.state.usrAfternoon.replace(/ /g, "") == '')
-                console.log("introduce los correos")
+                console.log("34tyhgf45h6645tyesrny")
             else{
                 this.setState({
                     isOpen: !this.state.isOpen
@@ -60,7 +60,7 @@ class KitchenCalendar extends React.Component {
                         {  dateStart: this.state.dateMorningStart, dateEnd: this.state.dateMorningEnd, title: this.state.usrMorning.replace(/ /g, "") + "@sciodev.com"  },
                         {  dateStart: this.state.dateAfternoonStart, dateEnd: this.state.dateAfternoonEnd, title: this.state.usrAfternoon.replace(/ /g, "") + "@sciodev.com"  } ],
                 },
-                function() { console.log("setState completed", this.props.parentCallback(this.state.eventsToSend))}
+                function() { console.log(this.props.parentCallback(this.state.eventsToSend))}
                 )
             }
         }else{
@@ -80,9 +80,8 @@ class KitchenCalendar extends React.Component {
     handleSelect = ({ start, end }) => {
         //start contains date to overwrite
         let arrayEventsCalendar = this.state.events
-        arrayEventsCalendar.forEach(element => {
-            console.log(element)
-        });
+        let arrayEventsMail = this.state.eventsToSend
+        
         const timeOffset = new Date().getTimezoneOffset() / 60
         let newDate = new Date(start.setHours(10 - timeOffset))
         const dateMorningStart = new Date(newDate).toISOString()
@@ -91,6 +90,16 @@ class KitchenCalendar extends React.Component {
         const dateAfternoonStart = new Date(newDate.setMinutes(0)).toISOString()
         const dateAfternoonEnd = new Date(newDate.setMinutes(15)).toISOString()
         var elementOfDay = String(start).split(" ");
+        let temporaryDates = [];
+        arrayEventsCalendar.forEach(event => {
+            if(start.getTime() != event.start.getTime())
+            temporaryDates.push(event)
+        });
+        let temporaryDatesToSend = [];
+        arrayEventsMail.forEach(event => {
+            if(new Date(dateAfternoonStart).getDate() != new Date(event.dateStart).getDate())
+            temporaryDatesToSend.push(event)
+        });
         this.setState({
             modalTxt: "Insert e-mails of team for the day" ,
             modalDate: elementOfDay[1] +' '+ elementOfDay[2] +' '+ elementOfDay[3],
@@ -98,11 +107,11 @@ class KitchenCalendar extends React.Component {
             dateMorningStart,
             dateMorningEnd,
             dateAfternoonStart,
-            dateAfternoonEnd
+            dateAfternoonEnd,
+            events : temporaryDates,
+            eventsToSend : temporaryDatesToSend,
         });
         this.toggleModal()
-        console.log(this.state.events)
-        console.log(this.props.eventsToSend)
     }
     render(){
         return (
