@@ -57,8 +57,8 @@ class KitchenCalendar extends React.Component {
                     usrAfternoon: '',
                     eventsToSend: [
                         ...this.state.eventsToSend,
-                        {  dateMorningStart: this.state.dateMorningStart, dateMorningEnd: this.state.dateMorningEnd, title: this.state.usrMorning.replace(/ /g, "") + "@sciodev.com"  },
-                        {  dateAfternoonStart: this.state.dateAfternoonStart, dateAfternoonEnd: this.state.dateAfternoonEnd, title: this.state.usrAfternoon.replace(/ /g, "") + "@sciodev.com"  } ],
+                        {  dateStart: this.state.dateMorningStart, dateEnd: this.state.dateMorningEnd, title: this.state.usrMorning.replace(/ /g, "") + "@sciodev.com"  },
+                        {  dateStart: this.state.dateAfternoonStart, dateEnd: this.state.dateAfternoonEnd, title: this.state.usrAfternoon.replace(/ /g, "") + "@sciodev.com"  } ],
                 },
                 function() { console.log("setState completed", this.props.parentCallback(this.state.eventsToSend))}
                 )
@@ -78,6 +78,11 @@ class KitchenCalendar extends React.Component {
     }
     
     handleSelect = ({ start, end }) => {
+        //start contains date to overwrite
+        let arrayEventsCalendar = this.state.events
+        arrayEventsCalendar.forEach(element => {
+            console.log(element)
+        });
         const timeOffset = new Date().getTimezoneOffset() / 60
         let newDate = new Date(start.setHours(10 - timeOffset))
         const dateMorningStart = new Date(newDate).toISOString()
@@ -96,6 +101,8 @@ class KitchenCalendar extends React.Component {
             dateAfternoonEnd
         });
         this.toggleModal()
+        console.log(this.state.events)
+        console.log(this.props.eventsToSend)
     }
     render(){
         return (

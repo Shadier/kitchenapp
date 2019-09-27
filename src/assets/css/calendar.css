@@ -261,6 +261,19 @@ body{
     margin: 0px;
     margin-left: 10px;
   }
+  #btnSendEvents:disabled,
+  #btnSendEvents[disabled]{
+    background-color: var(--darkGray);
+    cursor: auto;
+  }
+
+
+#btnSendEvents:disabled:hover,
+#btnSendEvents[disabled]:hover{
+  -webkit-box-shadow: var(--boxShadowNO);
+  -moz-box-shadow: var(--boxShadowNO);
+  box-shadow: var(--boxShadowNO);
+}
 
   .emailIndicator1{
     position: absolute;
