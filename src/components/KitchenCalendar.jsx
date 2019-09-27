@@ -22,6 +22,7 @@ class KitchenCalendar extends React.Component {
             onClose : false,
             onCancel : false,
             isOpen : false,
+            isAlertOpen : false,
             usrMorning : '',
             usrAfternoon : '',
             eventsToSend : []
@@ -35,28 +36,37 @@ class KitchenCalendar extends React.Component {
     }
     toggleModal = () => {
         const bandera = !this.state.isOpen
-        this.setState({
-          isOpen: !this.state.isOpen
-        });
         if(!bandera){
-            this.setState({
-                events: [
-                ...this.state.events,
-                {  start: this.state.date,
-                   end: this.state.date,
-                   title: this.state.usrMorning,
+            if(this.state.usrMorning.replace(/ /g, "") == '' || this.state.usrAfternoon.replace(/ /g, "") == '')
+                console.log("introduce los correos")
+            else{
+                this.setState({
+                    isOpen: !this.state.isOpen
+                });
+                this.setState({
+                    events: [
+                    ...this.state.events,
+                    {  start: this.state.date,
+                    end: this.state.date,
+                    title: this.state.usrMorning.replace(/ /g, ""),
+                    },
+                    {  start: this.state.date,
+                    end: this.state.date,
+                    title: this.state.usrAfternoon.replace(/ /g, "") } ],
+                    usrMorning: '',
+                    usrAfternoon: '',
+                    eventsToSend: [
+                        ...this.state.eventsToSend,
+                        {  dateMorningStart: this.state.dateMorningStart, dateMorningEnd: this.state.dateMorningEnd, title: this.state.usrMorning.replace(/ /g, "") + "@sciodev.com"  },
+                        {  dateAfternoonStart: this.state.dateAfternoonStart, dateAfternoonEnd: this.state.dateAfternoonEnd, title: this.state.usrAfternoon.replace(/ /g, "") + "@sciodev.com"  } ],
                 },
-                {  start: this.state.date,
-                   end: this.state.date,
-                   title: this.state.usrAfternoon } ],
-                
-                eventsToSend: [
-                    ...this.state.eventsToSend,
-                    {  dateMorningStart: this.state.dateMorningStart, dateMorningEnd: this.state.dateMorningEnd, title: this.state.usrMorning + "@sciodev.com"  },
-                    {  dateAfternoonStart: this.state.dateAfternoonStart, dateAfternoonEnd: this.state.dateAfternoonEnd, title: this.state.usrAfternoon + "@sciodev.com"  } ],
-            },
-            function() { console.log("setState completed", this.props.parentCallback(this.state.eventsToSend))}
-            )
+                function() { console.log("setState completed", this.props.parentCallback(this.state.eventsToSend))}
+                )
+            }
+        }else{
+            this.setState({
+                isOpen: !this.state.isOpen
+            });
         }
     }
 
@@ -67,9 +77,7 @@ class KitchenCalendar extends React.Component {
         this.setState({usrAfternoon: event.target.value})
     }
     
-    
     handleSelect = ({ start, end }) => {
-
         const timeOffset = new Date().getTimezoneOffset() / 60
         let newDate = new Date(start.setHours(10 - timeOffset))
         const dateMorningStart = new Date(newDate).toISOString()

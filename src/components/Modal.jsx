@@ -51,6 +51,10 @@ class Modal extends React.Component {
               
             }}
           />
+          
+          <div className="emailIndicator1">
+            @sciodev.com
+          </div>
           <label>Afternoon:</label>
 
           <Textbox
@@ -67,6 +71,9 @@ class Modal extends React.Component {
               
             }}
           />
+          <div className="emailIndicator2">
+            @sciodev.com
+          </div>
 
           <div className="footer">
             <button className="kd-button-modal btn-cancel" onClick={this.props.onCancel}>

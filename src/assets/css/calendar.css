@@ -43,8 +43,9 @@ body{
     min-width: 400px;
     width: 400px;
     max-width: 400px;
-    min-height: 300px;
+    min-height: 20px;
     padding: 20px;
+    padding-bottom: 35px;
     margin-left: calc(50% - 200px);
     top: calc(50% - 200px);
     
@@ -259,4 +260,19 @@ body{
   #btnSendEvents p{
     margin: 0px;
     margin-left: 10px;
+  }
+
+  .emailIndicator1{
+    position: absolute;
+    top: 223px;
+    right: 40px;
+    color: var(--darkGray);
+    background-color: white;
+  }
+  .emailIndicator2{
+    position: absolute;
+    top: 145px;
+    right: 40px;
+    color: var(--darkGray);
+    background-color: white;
   }
