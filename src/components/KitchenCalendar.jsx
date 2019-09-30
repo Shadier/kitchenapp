@@ -5,8 +5,8 @@ import moment, { months } from 'moment'
 import Modal  from './Modal'
 import '../App.css';
 
-
-const events = []
+const events = (JSON.parse(localStorage.getItem('localEvents')))? JSON.parse(localStorage.getItem('localEvents')) : []
+console.log(events)
 const localizer = momentLocalizer(moment) 
 
 class KitchenCalendar extends React.Component {
@@ -49,10 +49,12 @@ class KitchenCalendar extends React.Component {
                     {  start: this.state.date,
                     end: this.state.date,
                     title: this.state.usrMorning.replace(/ /g, ""),
+                    nuevo: true
                     },
                     {  start: this.state.date,
                     end: this.state.date,
-                    title: this.state.usrAfternoon.replace(/ /g, "") } ],
+                    title: this.state.usrAfternoon.replace(/ /g, ""), 
+                nuevo: true} ],
                     usrMorning: '',
                     usrAfternoon: '',
                     eventsToSend: [
@@ -60,7 +62,7 @@ class KitchenCalendar extends React.Component {
                         {  dateStart: this.state.dateMorningStart, dateEnd: this.state.dateMorningEnd, title: this.state.usrMorning.replace(/ /g, "") + "@sciodev.com"  },
                         {  dateStart: this.state.dateAfternoonStart, dateEnd: this.state.dateAfternoonEnd, title: this.state.usrAfternoon.replace(/ /g, "") + "@sciodev.com"  } ],
                 },
-                function() { console.log(this.props.parentCallback(this.state.eventsToSend))}
+                function() { this.saveTemporalEvents() }
                 )
             }
         }else{
@@ -68,8 +70,15 @@ class KitchenCalendar extends React.Component {
                 isOpen: !this.state.isOpen
             });
         }
-    }
 
+        
+    }
+    saveTemporalEvents = () => {
+        this.props.parentCallback(this.state.eventsToSend)
+        localStorage.setItem('localEvents', JSON.stringify(this.state.events))
+        
+        console.log(localStorage.getItem('localEvents'))
+    }
     onMorningChange = (event) =>{
         this.setState({usrMorning: event.target.value})
     }
@@ -78,6 +87,9 @@ class KitchenCalendar extends React.Component {
     }
     
     handleSelect = ({ start, end }) => {
+        if(!this.props.save){
+            return
+        }
         //start contains date to overwrite
         let arrayEventsCalendar = this.state.events
         let arrayEventsMail = this.state.eventsToSend
@@ -92,7 +104,7 @@ class KitchenCalendar extends React.Component {
         var elementOfDay = String(start).split(" ");
         let temporaryDates = [];
         arrayEventsCalendar.forEach(event => {
-            if(start.getTime() != event.start.getTime())
+            if(new Date(start).getTime() != new Date(event.start).getTime())
             temporaryDates.push(event)
         });
         let temporaryDatesToSend = [];

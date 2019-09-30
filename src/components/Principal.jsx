@@ -5,6 +5,7 @@ import AlertOK from './AlertOK';
 import AlertYN from './AlertYN';
 import mailIcon from '../assets/images/email-send.png'
 import '../assets/css/calendar.css';
+import axios from 'axios';
 
 class Principal extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class Principal extends React.Component {
       isAlertOKOpen: false,
       alertTitle: "Success",
       alertSubtitle: "Events sended successfully",
-      sended: false
+      sended: false,
+      save: true
     }
 
   }
@@ -29,16 +31,30 @@ class Principal extends React.Component {
     });
   }
   sendInvitations = () => {
+    
+    this.setState({
+      save: false
+    })
+    localStorage.removeItem('localEvents')
     //llamada a funcion de gustavo
-
-    //recibimos la respuesta
+    axios.post('http://10.16.0.104:1337/mail/', this.state.eventsToSend)
+      .then(response => {
+        console.log(response)
+        //validamos response
+        localStorage.removeItem('localEvents')
+      })
+      .catch(error => {
+        localStorage.removeItem('localEvents')
+        console.log(error);
+      })
+  
 
     //cerrar el alert actual
     this.openCloseAlertYN()
     //cambiamos los titulos
     this.setState({
-      alertTitle: "SUCCESS/ERROR",
-      alertSubtitle: "ALERT BODY"
+      alertTitle: "Success",
+      alertSubtitle: "Events was sent correctly"
     },
       () => this.openCloseAlertOK()
     );
@@ -78,7 +94,7 @@ class Principal extends React.Component {
         <div className="body-canvas">
           <button disabled={this.state.sended} id="btnSendEvents" className="kd-button" eventsToSend={this.state.eventsToSend} onClick={this.openYNA}><img src={mailIcon} alt="Mail icon" /><p>SEND ALL EVENTS</p></button>
           <div className="principal-container">
-            <KitchenCalendar parentCallback={this.callbackFunction} />
+            <KitchenCalendar save={this.state.save} parentCallback={this.callbackFunction} />
           </div>
         </div>
       </div>
