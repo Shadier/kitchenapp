@@ -25,7 +25,7 @@ class AlertYN extends React.Component {
                             CANCEL
                         </button>
                         <button type="submit" className="kd-button-modal" onClick={this.handleYes}>
-                            YES, SEND IT
+                            YES, SEND THEM
                         </button>
                     </div>
                 </div>
