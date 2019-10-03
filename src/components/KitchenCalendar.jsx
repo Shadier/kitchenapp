@@ -82,6 +82,7 @@ class KitchenCalendar extends React.Component {
             date: end, 
             events : temporaryDates,
         });
+        this.saveTemporalEvents()
         this.toggleModal()
     }
     render(){
@@ -98,7 +99,7 @@ class KitchenCalendar extends React.Component {
                 />
                 <Calendar
                     selectable
-                    views={months}
+                    
                     localizer={localizer}
                     events={this.state.events}
                     startAccessor="start"

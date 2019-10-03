@@ -12,9 +12,8 @@ class Principal extends React.Component {
 
   constructor(props) {
     super(props)
-  
     this.state = {
-      events: [],
+      events: (JSON.parse(localStorage.getItem('localEvents')))? JSON.parse(localStorage.getItem('localEvents')) : [],
       alertYNShow: false,
       alertOKShow: false,
       alertTitle: "Success",
@@ -45,13 +44,16 @@ class Principal extends React.Component {
     //llamada a funcion de gustavo
     axios.post('http://10.16.0.104:1337/mail/', this.state.events)
       .then(response => {
+        console.log("sended"+response)
+        
+        localStorage.removeItem('localEvents')
         this.setState({
           alertTitle: "Success",
           alertSubtitle: "Events were sent correctly!"
         },
-          () => {this.openCloseAlertOK(); this.setState({loading: false, save: false, sended: true})} //we wait until state changes
+          () => {
+            this.openCloseAlertOK()} //we wait until state changes
         );
-        localStorage.removeItem('localEvents')
       })
       .catch(error => {
         this.setState({
@@ -73,6 +75,9 @@ class Principal extends React.Component {
   }
   openCloseAlertOK = (event) => {
     this.setState({
+      loading: false, 
+      save: false, 
+      sended: true,
       alertOKShow: !this.state.alertOKShow
     });
   }
